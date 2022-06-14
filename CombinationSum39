@@ -1,0 +1,26 @@
+public class Solution {
+    public IList<IList<int>> CombinationSum(int[] candidates, int target) {
+        IList<IList<int>> returnResult = new List<IList<int>>();
+        Array.Sort(candidates);
+        backTrack(0, candidates, target, returnResult, new List<int>());
+        return returnResult;
+    }
+    
+    private static void backTrack(int index, int[] arr, int target, IList<IList<int>> answer, List<int> tempList)
+    {        
+        if (target < 0) return;
+        if(target == 0) answer.Add(new List<int>(tempList));
+        else
+        {
+            for(int i = index; i< arr.Length; i++)
+            {
+                if((target - arr[i]) >= 0)
+                {
+                    tempList.Add(arr[i]);
+                    backTrack(i, arr, target - arr[i], answer, tempList);
+                    tempList.Remove(arr[i]);
+                }
+            }
+        }
+    }
+}
